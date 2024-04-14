@@ -1,25 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import {Route, BrowserRouter as Router, Routes, Navigate, Outlet} from "react-router-dom";
+import Login from "./components/Login";
+import {UserProvider} from "./components/UserContext";
+import Register from "./components/Register";
+import Home from "./components/Home";
+import {getLoggedInUser} from "./utils/repository";
+
+const PrivateRoutes = () => {
+    const auth = getLoggedInUser();
+    return (
+        auth ? <Outlet/> : <Navigate to="/login"/>
+    )
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <UserProvider>
+            <Router>
+                <Routes>
+                    <Route path="/login" element={<Login/>}></Route>
+                    <Route path="/register" element={<Register/>}></Route>
+                    <Route element={<PrivateRoutes/>}>
+                        <Route path="/" element={<Home/>}/>
+                    </Route>
+                </Routes>
+
+            </Router>
+        </UserProvider>
+    );
 }
 
 export default App;
