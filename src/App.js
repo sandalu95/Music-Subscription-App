@@ -6,6 +6,8 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import {getLoggedInUser} from "./utils/repository";
 
+// Private Route component to handle guarded routes
+// User won't be able to visit home page if not logged in
 const PrivateRoutes = () => {
     const auth = getLoggedInUser();
     return (

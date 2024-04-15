@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {useUser} from "./UserContext";
 import image from "../assets/login.jpg";
 
+// Registration Page
 const Register = () => {
     const {login} = useUser();
     const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ const Register = () => {
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
 
+    // Validate Registration form fields
     const validateFormData = () => {
         const errors = {};
 
@@ -36,6 +38,7 @@ const Register = () => {
         return errors;
     }
 
+    // Handle the form submission
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors(null);
@@ -53,7 +56,7 @@ const Register = () => {
                 }
             };
 
-            //Submission to AWS goes here
+            // API Call
             axios.post('https://bsew8pa20a.execute-api.us-east-1.amazonaws.com/dev/register', payload)
                 .then(function (response) {
                     alert(response.data.body.message);

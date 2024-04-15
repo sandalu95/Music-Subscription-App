@@ -7,6 +7,7 @@ import {useUser} from "./UserContext";
 import {Link} from "react-router-dom";
 import image from '../assets/company_logo.png';
 
+// Main Home Page
 const Home = () => {
     const {logout} = useUser();
     const loggedInUser = getLoggedInUser();
@@ -24,6 +25,7 @@ const Home = () => {
     const messageString = "To get started, please enter a search query to find music data.";
     const [displayMessage, setDisplayMessage] = useState(messageString);
 
+    // To update the subscription list in the UI
     useEffect(() => {
         const payload = {
             "httpMethod": "GET",
@@ -31,6 +33,8 @@ const Home = () => {
                 "email": loggedInUser.email
             }
         }
+
+        // API Call to get the subscribed music
         axios.post('https://bsew8pa20a.execute-api.us-east-1.amazonaws.com/dev/subscriptions', payload)
             .then(function (response) {
                 const subscriptions = [];
@@ -48,6 +52,7 @@ const Home = () => {
             })
     }, [newlySubscribedMusic, loggedInUser.email]);
 
+    // Load the results of the search query
     const handleQuery = (e) => {
         e.preventDefault();
         setResultsLoading(true);
@@ -62,6 +67,7 @@ const Home = () => {
             }
         }
 
+        // API Call to get the query results
         axios.post('https://bsew8pa20a.execute-api.us-east-1.amazonaws.com/dev/music', payload)
             .then(function (response) {
                 console.log(response.data.body.message);
@@ -81,11 +87,13 @@ const Home = () => {
             });
     };
 
+    // Set the results which goes for each page in the results area
     const paginatedData = queryResultData?.slice(
         (currentPage - 1) * pageSize,
         currentPage * pageSize
     );
 
+    // Handle the subscribe music action
     const handleSubscribe = (music, email) => {
         const payload = {
             "httpMethod": "POST",
@@ -95,6 +103,8 @@ const Home = () => {
                 "action": "subscribe"
             }
         }
+
+        // API Call to subscribe the music
         axios.post('https://bsew8pa20a.execute-api.us-east-1.amazonaws.com/dev/subscriptions', payload)
             .then(function (response) {
                 console.log(response.data.body.message);
@@ -105,6 +115,7 @@ const Home = () => {
             });
     }
 
+    // Handle the unsubscribe music action
     const handleUnsubscribe = (music, email) => {
         const payload = {
             "httpMethod": "POST",
@@ -114,6 +125,8 @@ const Home = () => {
                 "action": "unsubscribe"
             }
         }
+
+        // API Call to unsubscribe the music
         axios.post('https://bsew8pa20a.execute-api.us-east-1.amazonaws.com/dev/subscriptions', payload)
             .then(function (response) {
                 console.log(response.data.body.message);

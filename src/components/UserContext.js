@@ -5,14 +5,17 @@ const UserContext = createContext();
 
 export const useUser = () => useContext(UserContext);
 
+// The context created to handle the logged in user details
 export const UserProvider = ({children}) => {
     const [user, setUser] = useState(null);
 
+    // Handle the login action
     const login = (userData) => {
         setUser(userData);
         setLoggedInUser(userData);
     };
 
+    // Handle the logout action
     const logout = () => {
         setUser(null);
         removeLoggedInUser();

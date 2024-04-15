@@ -5,6 +5,7 @@ import {useUser} from "./UserContext";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import image from '../assets/login.jpg';
 
+// Login Page
 const Login = () => {
     const {login} = useUser();
     const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
 
+    // Validate Login Form fields
     const validate = (values) => {
         let errors = {};
         if (!values.email) {
@@ -27,6 +29,7 @@ const Login = () => {
         return errors;
     }
 
+    // Handle Login Form Submit
     const verifyCredentials = (event) => {
         event.preventDefault();
         setErrorMessage("");
@@ -43,10 +46,10 @@ const Login = () => {
             }
         }
 
-        //Submission to AWS goes here
+        // API Call
         axios.post('https://bsew8pa20a.execute-api.us-east-1.amazonaws.com/dev/login', payload)
             .then(function (response) {
-                if(response.data.statusCode === 200) {
+                if (response.data.statusCode === 200) {
                     alert("Login Successful");
                     login(response.data.body.data);
                     navigate("/");

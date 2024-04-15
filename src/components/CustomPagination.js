@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import Pagination from "react-bootstrap/Pagination";
 import PropTypes from "prop-types";
 import "./pagination.css";
 
+/*
+Code adapted from code example:
+https://retool.com/blog/how-to-build-a-custom-pagination-component-in-react
+ */
 const CustomPagination = ({
                               itemsCount,
                               itemsPerPage,
@@ -70,7 +74,7 @@ const CustomPagination = ({
 
         if (!isPageNumberOutOfRange) {
             isPageNumberOutOfRange = true;
-            return <Pagination.Ellipsis key={pageNumber} className="muted" />;
+            return <Pagination.Ellipsis key={pageNumber} className="muted"/>;
         }
 
         return null;
@@ -79,7 +83,7 @@ const CustomPagination = ({
     useEffect(setLastPageAsCurrent, [pagesCount]);
 
     return (
-        <div style={{marginTop:'15px', display: 'flex', justifyContent: 'end'}}>
+        <div style={{marginTop: '15px', display: 'flex', justifyContent: 'end'}}>
             {isPaginationShown && (
                 <Pagination>
                     <Pagination.Prev
