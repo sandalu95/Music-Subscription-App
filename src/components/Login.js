@@ -46,19 +46,21 @@ const Login = () => {
         //Submission to AWS goes here
         axios.post('https://bsew8pa20a.execute-api.us-east-1.amazonaws.com/dev/login', payload)
             .then(function (response) {
-                alert(response.data.body.message);
                 if(response.data.statusCode === 200) {
+                    alert("Login Successful");
                     login(response.data.body.data);
                     navigate("/");
                 } else {
                     setPassword("");
                     setErrorMessage("Username and / or password invalid, please try again.");
+                    alert("Invalid Username and / or password.");
                 }
             })
             .catch(function (error) {
                 console.log(error);
                 setPassword("");
                 setErrorMessage("Username and / or password invalid, please try again.");
+                alert("Invalid Username and / or password.");
             });
     };
 

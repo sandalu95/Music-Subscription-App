@@ -57,9 +57,7 @@ const Register = () => {
             axios.post('https://bsew8pa20a.execute-api.us-east-1.amazonaws.com/dev/register', payload)
                 .then(function (response) {
                     alert(response.data.body.message);
-
                     login(response.data.body.data);
-
                     navigate("/login");
                 })
                 .catch(function (error) {
