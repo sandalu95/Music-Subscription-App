@@ -17,7 +17,7 @@ const Home = () => {
     const [queryResultData, setQueryResultData] = useState([]); // set the query result music data
     const [newlySubscribedMusic, setNewlySubscribedMusic] = useState({}); // set the new subscription music data
     const [currentPage, setCurrentPage] = useState(1); // set the current page
-    const pageSize = 6; // show row in list
+    const pageSize = 4; // show row in list
     const [subscriptionLoading, setSubscriptionLoading] = useState(true);
     const [resultsLoading, setResultsLoading] = useState(false);
     const [userSubscriptionList, setUserSubscriptionList] = useState([]);
@@ -143,13 +143,13 @@ const Home = () => {
             </Navbar>
             <div className="d-flex">
                 <div>
-                    <Card style={{height: '85vh', margin: '25px', padding: '8px 16px', minWidth: '350px'}}>
+                    <Card style={{height: '80vh', margin: '25px', padding: '8px 16px', minWidth: '280px'}}>
                         <div className="my-4">
                             <span style={{
-                                fontSize: '32px',
+                                fontSize: '28px',
                                 lineHeight: '32px',
                                 fontWeight: 800,
-                            }}>Favourites <i className="bi bi-heart-fill"></i></span>
+                            }}>Subscriptions <i className="bi bi-heart-fill"></i></span>
                         </div>
                         {subscriptionLoading ?
                             <div style={{
@@ -166,7 +166,8 @@ const Home = () => {
                                         height: '100%',
                                         display: 'flex',
                                         justifyContent: 'center',
-                                        alignItems: 'center'
+                                        alignItems: 'center',
+                                        maxWidth: '280px'
                                     }}>
                                         <p>It looks like you haven't subscribed to any music yet.</p>
                                     </div> :
@@ -175,7 +176,7 @@ const Home = () => {
                                             {userSubscriptionList?.map((music, index) => (
                                                 <ListGroup.Item key={index} style={{border: 'none'}}>
                                                     <div className="card" style={{
-                                                        width: '18rem'
+                                                        width: '13rem',
                                                     }}>
                                                         <img className="card-img-top" src={music.artist_image}
                                                              alt="Card cap"/>
@@ -185,19 +186,19 @@ const Home = () => {
                                                                 flexDirection: 'column'
                                                             }}>
                                                 <span style={{
-                                                    fontSize: '20px',
+                                                    fontSize: '18px',
                                                     color: "#363636",
                                                     lineHeight: '20px',
                                                     fontWeight: 750,
                                                     marginBottom: '3px'
                                                 }}>{music.title} ({music.year})</span>
                                                                 <span style={{
-                                                                    fontSize: '16px',
+                                                                    fontSize: '14px',
                                                                     color: "#605e5e",
                                                                     fontWeight: 550
                                                                 }}>{music.artist}</span>
                                                                 <div className="d-flex justify-content-end">
-                                                                    <Button variant="danger"
+                                                                    <Button className="btn-sm btn-danger"
                                                                             onClick={() => handleUnsubscribe(music, loggedInUser.email)}>Remove</Button>
                                                                 </div>
                                                             </div>
@@ -258,23 +259,25 @@ const Home = () => {
                         </div> :
                         (
                             paginatedData?.length > 0 ? (
-                                <Row>
-                                    <div className="p-4 d-flex flex-column justify-content-between">
-                                        <h3>Results</h3>
-                                        <ListGroup>
-                                            {paginatedData.map((music, index) => (
-                                                <ListGroup.Item key={index}>
-                                                    <Row style={{alignItems: 'center'}}>
-                                                        <Col md={9}>
-                                                            <div style={{display: 'flex', alignItems: 'center'}}>
-                                                                <img src={music.artist_image} alt={music.artist}
-                                                                     style={{
-                                                                         marginRight: '10px',
-                                                                         width: '100px',
-                                                                         height: '100px',
-                                                                         objectFit: 'cover'
-                                                                     }}/>
-                                                                <div>
+                                <Row style={{height: '80%'}}>
+                                    <div className="p-4 d-flex flex-column justify-content-between"
+                                         style={{height: '100%'}}>
+                                        <div>
+                                            <h3 className="mb-3">Results</h3>
+                                            <ListGroup>
+                                                {paginatedData.map((music, index) => (
+                                                    <ListGroup.Item key={index}>
+                                                        <Row style={{alignItems: 'center'}}>
+                                                            <Col md={9}>
+                                                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                                                    <img src={music.artist_image} alt={music.artist}
+                                                                         style={{
+                                                                             marginRight: '10px',
+                                                                             width: '100px',
+                                                                             height: '100px',
+                                                                             objectFit: 'cover'
+                                                                         }}/>
+                                                                    <div>
                                                             <span style={{
                                                                 fontSize: '20px',
                                                                 color: "#363636",
@@ -282,24 +285,26 @@ const Home = () => {
                                                                 fontWeight: 650,
                                                                 marginBottom: '3px'
                                                             }}>{music.title}</span>
-                                                                    <p style={{marginBottom: '1px'}}>{music.artist}</p>
-                                                                    <p>{music.year}</p>
+                                                                        <p style={{marginBottom: '1px'}}>{music.artist}</p>
+                                                                        <p>{music.year}</p>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </Col>
-                                                        <Col md={3} style={{textAlign: 'end'}}>
-                                                            {(userSubscriptionList.findIndex((sub) => sub.title === music.title) < 0) ?
-                                                                <Button variant="success"
-                                                                        onClick={() => handleSubscribe(music, loggedInUser.email)}
-                                                                        style={{minWidth: '100px'}}>Subscribe</Button> :
-                                                                <Col style={{textAlign: 'end'}}><Button variant="danger"
-                                                                                                        onClick={() => handleUnsubscribe(music, loggedInUser.email)}
-                                                                                                        style={{minWidth: '100px'}}>Remove</Button></Col>}
-                                                        </Col>
-                                                    </Row>
-                                                </ListGroup.Item>
-                                            ))}
-                                        </ListGroup>
+                                                            </Col>
+                                                            <Col md={3} style={{textAlign: 'end'}}>
+                                                                {(userSubscriptionList.findIndex((sub) => sub.title === music.title) < 0) ?
+                                                                    <Button variant="success"
+                                                                            onClick={() => handleSubscribe(music, loggedInUser.email)}
+                                                                            style={{minWidth: '100px'}}>Subscribe</Button> :
+                                                                    <Col style={{textAlign: 'end'}}><Button
+                                                                        variant="danger"
+                                                                        onClick={() => handleUnsubscribe(music, loggedInUser.email)}
+                                                                        style={{minWidth: '100px'}}>Remove</Button></Col>}
+                                                            </Col>
+                                                        </Row>
+                                                    </ListGroup.Item>
+                                                ))}
+                                            </ListGroup>
+                                        </div>
                                         {queryResultData?.length > 6 &&
                                             <>
                                                 <CustomPagination
