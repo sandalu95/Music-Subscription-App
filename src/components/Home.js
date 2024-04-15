@@ -56,9 +56,9 @@ const Home = () => {
 
         const payload = {
             body: {
-                title: title,
-                artist: artist,
-                year: year.toString()
+                title: title?.toLowerCase(),
+                artist: artist?.toLowerCase(),
+                year: year?.toString()
             }
         }
 
