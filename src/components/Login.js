@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useUser} from "./UserContext";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import image from '../assets/login.jpg';
@@ -133,7 +133,8 @@ const Login = () => {
                         fontSize: '18px'
                     }}>Login</Button>
                     <div className="mt-3" style={{textAlign: 'center'}}>New to our website?{' '}
-                        <a href="/register">Join today</a></div>
+                        <Link to="/register">Join today</Link>
+                    </div>
                 </Form>
             </Col>
             <Col className="md-7">

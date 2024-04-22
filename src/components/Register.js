@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useUser} from "./UserContext";
 import image from "../assets/login.jpg";
 
@@ -146,7 +146,7 @@ const Register = () => {
                         fontSize: '18px'
                     }}>Register</Button>
                     <div className="mt-3" style={{textAlign: 'center'}}>Already have an account?{' '}
-                        <a href="/login">Login Here</a></div>
+                        <Link to="/login">Login Here</Link></div>
                     {errorMessage !== null && (
                         <div className="form-group">
                             <span className="text-danger">{errorMessage}</span>
